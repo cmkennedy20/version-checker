@@ -1,0 +1,4 @@
+*/host*
+*/resolv.*
+node_modules
+package*

@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  node-container:
+    container_name: node-container
+    image: node-test:latest
+    build: 
+      dockerfile: ./docker/node.Dockerfile
+      context: ../
+    volumes:
+      - "../ado-task:/opt/ado-task"
+      - "../docker/:/opt/docker"
+    entrypoint: /bin/bash /opt/docker/startup.sh
