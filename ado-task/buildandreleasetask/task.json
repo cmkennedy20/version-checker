@@ -1,9 +1,9 @@
 {
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-    "id": "{{taskguid}}",
-    "name": "{{taskname}}",
-    "friendlyName": "{{taskfriendlyname}}",
-    "description": "{{taskdescription}}",
+    "id": "675196dd-02e4-4270-becf-3a46a037f7fa",
+    "name": "version-check",
+    "friendlyName": "Version Check",
+    "description": "Tool to examine the version of a common app (.NET, Python, JavaScript, TypeScript)",
     "helpMarkDown": "",
     "category": "Utility",
     "author": "{{taskauthor}}",
@@ -15,12 +15,20 @@
     "instanceNameFormat": "Echo $(samplestring)",
     "inputs": [
         {
-            "name": "samplestring",
+            "name": "Language",
             "type": "string",
-            "label": "Sample String",
+            "label": "Input Language",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "A sample string"
+            "helpMarkDown": "Select the Language to test"
+        },
+        {
+            "name": "FileHandler",
+            "type": "filePath",
+            "label": "Path to the file handler",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Path to the package config file"
         }
     ],
     "execution": {

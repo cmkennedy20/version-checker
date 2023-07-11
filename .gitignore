@@ -2,3 +2,4 @@
 */resolv.*
 node_modules
 package*
+.taskkey
