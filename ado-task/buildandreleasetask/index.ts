@@ -1,12 +1,22 @@
 var tl = require('azure-pipelines-task-lib/task');
-import * as request from 'request';
+import request = require('request');
 
 async function run() {
     try {
         const language: string | undefined = tl.getInput('Language', true);
-        const version: string | undefined = tl.getInput('Version', true);
+        const file: string | undefined = tl.getInput('PackageFile', true);
+        var result = new Boolean;
+        if (language == undefined ) {
+            tl.setResult(tl.TaskResult.Failed, 'No language was given');
+            return;
+        }
+        if (file == undefined ) {
+            tl.setResult(tl.TaskResult.Failed, 'No language was given');
+            return;
+        }
         switch (language) {
             case "Dotnet":
+                result = await getLatestDotnetVersion(file)
                 console.log("The color is red.");
                 break;
             case "Node":
@@ -19,16 +29,9 @@ async function run() {
                 console.log("The color is green.");
                 break;
             default:
-                console.log("Unknown color.");
+
                 break;
             }
-        const result = await getLatestDotnetVersion(version)
-        if (!result) {
-            tl.setResult(tl.TaskResult.Failed, 'Bad input was given');
-            return;
-        } else {
-            tl.setResult(tl.TaskResult.Succeeded, 'The version is up to date')
-        }
     }
     catch (err) {
         tl.setResult(tl.TaskResult.Failed, err.message);

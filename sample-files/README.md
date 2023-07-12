@@ -1,0 +1,1 @@
+This folder contains several template files. They will be used in development and testing.

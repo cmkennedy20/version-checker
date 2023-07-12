@@ -40,46 +40,51 @@ var tl = require('azure-pipelines-task-lib/task');
 var request = require("request");
 function run() {
     return __awaiter(this, void 0, void 0, function () {
-        var language, version, result, err_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var language, file, result, _a, err_1;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
+                    _b.trys.push([0, 8, , 9]);
                     language = tl.getInput('Language', true);
-                    version = tl.getInput('Version', true);
-                    switch (language) {
-                        case "Dotnet":
-                            console.log("The color is red.");
-                            break;
-                        case "Node":
-                            console.log("The color is blue.");
-                            break;
-                        case "Angular":
-                            console.log("The color is green.");
-                            break;
-                        case "Terraform":
-                            console.log("The color is green.");
-                            break;
-                        default:
-                            console.log("Unknown color.");
-                            break;
-                    }
-                    return [4 /*yield*/, getLatestDotnetVersion(version)];
-                case 1:
-                    result = _a.sent();
-                    if (!result) {
-                        tl.setResult(tl.TaskResult.Failed, 'Bad input was given');
+                    file = tl.getInput('PackageFile', true);
+                    result = new Boolean;
+                    if (language == undefined) {
+                        tl.setResult(tl.TaskResult.Failed, 'No language was given');
                         return [2 /*return*/];
                     }
-                    else {
-                        tl.setResult(tl.TaskResult.Succeeded, 'The version is up to date');
+                    if (file == undefined) {
+                        tl.setResult(tl.TaskResult.Failed, 'No language was given');
+                        return [2 /*return*/];
                     }
-                    return [3 /*break*/, 3];
+                    _a = language;
+                    switch (_a) {
+                        case "Dotnet": return [3 /*break*/, 1];
+                        case "Node": return [3 /*break*/, 3];
+                        case "Angular": return [3 /*break*/, 4];
+                        case "Terraform": return [3 /*break*/, 5];
+                    }
+                    return [3 /*break*/, 6];
+                case 1: return [4 /*yield*/, getLatestDotnetVersion(file)];
                 case 2:
-                    err_1 = _a.sent();
+                    result = _b.sent();
+                    console.log("The color is red.");
+                    return [3 /*break*/, 7];
+                case 3:
+                    console.log("The color is blue.");
+                    return [3 /*break*/, 7];
+                case 4:
+                    console.log("The color is green.");
+                    return [3 /*break*/, 7];
+                case 5:
+                    console.log("The color is green.");
+                    return [3 /*break*/, 7];
+                case 6: return [3 /*break*/, 7];
+                case 7: return [3 /*break*/, 9];
+                case 8:
+                    err_1 = _b.sent();
                     tl.setResult(tl.TaskResult.Failed, err_1.message);
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
+                    return [3 /*break*/, 9];
+                case 9: return [2 /*return*/];
             }
         });
     });
