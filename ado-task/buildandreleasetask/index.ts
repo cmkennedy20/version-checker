@@ -1,22 +1,23 @@
 var tl = require('azure-pipelines-task-lib/task');
 import request = require('request');
+import fs from 'fs';
 
 async function run() {
     try {
         const language: string | undefined = tl.getInput('Language', true);
-        const file: string | undefined = tl.getInput('PackageFile', true);
+        const fileHandler: string | undefined = tl.getPathInput('FileHandler', true);
         var result = new Boolean;
         if (language == undefined ) {
             tl.setResult(tl.TaskResult.Failed, 'No language was given');
             return;
         }
-        if (file == undefined ) {
-            tl.setResult(tl.TaskResult.Failed, 'No language was given');
+        if (fileHandler == undefined ) {
+            tl.setResult(tl.TaskResult.Failed, 'No file was given');
             return;
         }
         switch (language) {
             case "Dotnet":
-                result = await getLatestDotnetVersion(file)
+                result = await getLatestDotnetVersion(fileHandler)
                 console.log("The color is red.");
                 break;
             case "Node":
@@ -96,6 +97,42 @@ function getLatestDotnetVersion(currentVersion: string): Promise<boolean> {
     });
   });
 }
+
+function getDotnetVersion(string):Promise<string>{
+  
+}
+
+function checkNugetPackage(): Promise<boolean>{
+  
+}
+
+function readProjectFile(filename: string): void {
+  // Read the file
+  fs.readFile(filename, 'utf8', function (error: NodeJS.ErrnoException | null, fileContent: string) {
+    if (error) {
+      console.log('Error reading file:', error);
+      return;
+    }
+
+    const pattern = /<PackageReference Include="([^"]+)" Version="([^"]+)" \/>/g;
+
+    // Find all package references in the .csproj content
+    const packageReferences: { packageName: string; packageVersion: string }[] = [];
+    let match: RegExpExecArray | null;
+    while ((match = pattern.exec(fileContent)) !== null) {
+      const packageName = match[1];
+      const packageVersion = match[2];
+      packageReferences.push({ packageName, packageVersion });
+    }
+
+    // Log the extracted package and version information
+    packageReferences.forEach((packageRef) => {
+      console.log('Package:', packageRef.packageName);
+      console.log('Version:', packageRef.packageVersion);
+    });
+  });
+}
+
 
 
 run();

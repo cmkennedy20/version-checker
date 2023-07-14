@@ -9,5 +9,6 @@ npm install sync-request --save-dev
 npm install @types/mocha --save-dev 
 npm install @types/request --save-dev 
 npm install typescript@4.6.3 -g --save-dev
+npm install fs -g --save-dev;
 tsc --init --target es6
 while true; do sleep 50; done
